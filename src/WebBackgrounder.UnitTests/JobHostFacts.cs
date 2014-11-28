@@ -1,6 +1,8 @@
-﻿using System;
+﻿extern alias netfxThreading;
+using System;
 using System.Threading;
-using System.Threading.Tasks;
+using netfxThreading.System.Threading;
+using netfxThreading.System.Threading.Tasks;
 using Xunit;
 
 namespace WebBackgrounder.UnitTests

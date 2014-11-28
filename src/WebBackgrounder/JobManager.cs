@@ -1,7 +1,8 @@
-﻿using System;
+﻿extern alias netfxThreading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using netfxThreading.System.Threading;
 
 namespace WebBackgrounder
 {

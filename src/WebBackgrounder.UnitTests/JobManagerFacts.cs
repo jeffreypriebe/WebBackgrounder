@@ -1,7 +1,8 @@
-﻿using System;
+﻿extern alias netfxThreading;
+using System;
 using System.Collections.Concurrent;
-using System.Threading;
-using System.Threading.Tasks;
+using netfxThreading.System.Threading;
+using netfxThreading.System.Threading.Tasks;
 using Moq;
 using Xunit;
 
@@ -25,7 +26,7 @@ namespace WebBackgrounder.UnitTests
             [Fact]
             public void GetsTheJobDone()
             {
-                var jobDoneEvent = new ManualResetEvent(false);
+                var jobDoneEvent = new System.Threading.ManualResetEvent(false);
                 var job = new Mock<IJob>();
                 job.Setup(j => j.Interval).Returns(TimeSpan.FromMilliseconds(1));
                 var jobs = new[] { job.Object };
@@ -43,8 +44,8 @@ namespace WebBackgrounder.UnitTests
             public void GetsTheJobsDoneInTheRightOrder()
             {
                 var completed = new ConcurrentQueue<string>();
-                var longerJobDoneEvent = new ManualResetEvent(false);
-                var shorterJobDoneEvent = new ManualResetEvent(false);
+                var longerJobDoneEvent = new System.Threading.ManualResetEvent(false);
+                var shorterJobDoneEvent = new System.Threading.ManualResetEvent(false);
                 var longerJob = new Mock<IJob>();
                 var shorterJob = new Mock<IJob>();
                 longerJob.Setup(j => j.Interval).Returns(TimeSpan.FromMilliseconds(4));
@@ -75,7 +76,7 @@ namespace WebBackgrounder.UnitTests
                 var secondJob = new Mock<IJob>();
                 secondJob.Setup(j => j.Interval).Returns(TimeSpan.FromMilliseconds(2));
                 var jobs = new[] { jobNoTask.Object, secondJob.Object };
-                var firstJobCompleteEvent = new ManualResetEvent(false);
+                var firstJobCompleteEvent = new System.Threading.ManualResetEvent(false);
                 var coordinator = new Mock<IJobCoordinator>();
                 coordinator.Setup(c => c.GetWork(jobNoTask.Object)).Returns((Task)null);
                 coordinator.Setup(c => c.GetWork(secondJob.Object)).Returns((Task)null).Callback(() => firstJobCompleteEvent.Set());
@@ -100,7 +101,7 @@ namespace WebBackgrounder.UnitTests
                 var secondJob = new Mock<IJob>();
                 secondJob.Setup(j => j.Interval).Returns(TimeSpan.FromMilliseconds(2));
                 var jobs = new[] { jobNoTask.Object, secondJob.Object };
-                var firstJobCompleteEvent = new ManualResetEvent(false);
+                var firstJobCompleteEvent = new System.Threading.ManualResetEvent(false);
                 var coordinator = new Mock<IJobCoordinator>();
                 coordinator.Setup(c => c.GetWork(jobNoTask.Object)).Throws<Exception>();
                 coordinator.Setup(c => c.GetWork(secondJob.Object)).Returns((Task)null).Callback(() => firstJobCompleteEvent.Set());
@@ -121,7 +122,7 @@ namespace WebBackgrounder.UnitTests
                 var secondJob = new Mock<IJob>();
                 secondJob.Setup(j => j.Interval).Returns(TimeSpan.FromMilliseconds(2));
                 var jobs = new[] { jobNoTask.Object, secondJob.Object };
-                var firstJobCompleteEvent = new ManualResetEvent(false);
+                var firstJobCompleteEvent = new System.Threading.ManualResetEvent(false);
                 var coordinator = new Mock<IJobCoordinator>();
                 coordinator.Setup(c => c.GetWork(jobNoTask.Object)).Throws<Exception>();
                 coordinator.Setup(c => c.GetWork(secondJob.Object)).Returns((Task)null).Callback(() => firstJobCompleteEvent.Set());

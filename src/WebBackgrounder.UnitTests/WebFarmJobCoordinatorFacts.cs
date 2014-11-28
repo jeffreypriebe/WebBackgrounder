@@ -1,6 +1,7 @@
-﻿using System;
+﻿extern alias netfxThreading;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using netfxThreading.System.Threading.Tasks;
 using Moq;
 using Xunit;
 

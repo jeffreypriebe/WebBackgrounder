@@ -1,5 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿extern alias netfxThreading;
+using System;
+using netfxThreading.System.Threading.Tasks;
 
 namespace WebBackgrounder
 {
